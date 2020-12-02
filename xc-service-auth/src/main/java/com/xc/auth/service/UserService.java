@@ -1,8 +1,8 @@
 package com.xc.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.xc.auth.domain.UserVO;
 import com.xc.auth.entity.User;
+import com.xc.common.domain.UserVO;
 
 /**
  * @author ShenHongSheng

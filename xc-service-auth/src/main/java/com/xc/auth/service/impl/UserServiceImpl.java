@@ -1,10 +1,10 @@
 package com.xc.auth.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xc.auth.domain.UserVO;
 import com.xc.auth.entity.User;
 import com.xc.auth.mapper.UserMapper;
 import com.xc.auth.service.UserService;
+import com.xc.common.domain.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

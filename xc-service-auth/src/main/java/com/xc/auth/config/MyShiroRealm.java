@@ -1,9 +1,9 @@
 package com.xc.auth.config;
 
-import com.xc.auth.domain.PermissionVO;
-import com.xc.auth.domain.RoleVO;
-import com.xc.auth.domain.UserVO;
 import com.xc.auth.service.UserService;
+import com.xc.common.domain.PermissionVO;
+import com.xc.common.domain.RoleVO;
+import com.xc.common.domain.UserVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

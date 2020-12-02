@@ -1,4 +1,4 @@
-package com.xc.auth.domain;
+package com.xc.common.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

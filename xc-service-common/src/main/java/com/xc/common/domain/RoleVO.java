@@ -1,6 +1,5 @@
-package com.xc.auth.domain;
+package com.xc.common.domain;
 
-import com.xc.auth.entity.Permission;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

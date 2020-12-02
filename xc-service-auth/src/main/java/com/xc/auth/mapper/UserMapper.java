@@ -1,8 +1,8 @@
 package com.xc.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xc.auth.domain.UserVO;
 import com.xc.auth.entity.User;
+import com.xc.common.domain.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

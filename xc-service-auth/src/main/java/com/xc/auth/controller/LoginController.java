@@ -1,10 +1,10 @@
 package com.xc.auth.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.xc.auth.domain.UserVO;
 import com.xc.auth.entity.User;
 import com.xc.auth.service.UserService;
 import com.xc.common.domain.ResultInfo;
+import com.xc.common.domain.UserVO;
 import com.xc.common.enums.GlobalStatusEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
