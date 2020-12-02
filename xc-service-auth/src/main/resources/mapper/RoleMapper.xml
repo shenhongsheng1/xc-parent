@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xc.auth.mapper.RoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.xc.auth.entity.Role">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="roleCode" column="role_code" jdbcType="VARCHAR"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="available" column="available" jdbcType="BOOLEAN"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="DATE"/>
+        <result property="updateTime" column="update_time" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, role_code, role_name, description, available, user_id, create_time, update_time
+    </sql>
+
+    <sql id="whereSql">
+        <if test="null != _parameter">
+            <where>
+                <if test="null != roleCode and '' != roleCode">
+                    and role_code = #{roleCode, jdbcType=VARCHAR}
+                </if>
+                <if test="null != roleName and '' != roleName">
+                    and role_name = #{roleName, jdbcType=VARCHAR}
+                </if>
+                <if test="null != description and '' != description">
+                    and description = #{description, jdbcType=VARCHAR}
+                </if>
+                <if test="null != available">
+                    and available = #{available, jdbcType=VARCHAR}
+                </if>
+                <if test="null != userId and '' != userId">
+                    and user_id = #{userId, jdbcType=VARCHAR}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <select id="findByParam" resultMap="BaseResultMap" resultType="com.xc.auth.entity.Role">
+        select <include refid="Base_Column_List"/> from xc_auth_role <include refid="whereSql"/>
+    </select>
+</mapper>

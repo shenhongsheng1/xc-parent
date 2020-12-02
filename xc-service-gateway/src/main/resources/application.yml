@@ -1,0 +1,39 @@
+##配置放在nacos的xc-service-gateway-dev.yaml中
+#server:
+#  port: 8000
+#
+#spring:
+#  application:
+#    name: xc-service-gateway
+#
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true   #\u5F00\u542F\u6839\u636E\u670D\u52A1\u540D\u52A8\u6001\u83B7\u53D6\u8DEF\u7531\u5730\u5740
+#          #route-id-prefix:   \u8DEF\u7531id\u524D\u7F00
+#          lowerCaseServiceId: false
+#      routes:   #\u914D\u7F6E\u8DEF\u7531
+#        - id: xc-service-auth   #\u8BF7\u6C42 http://localhost:8100/xc-service-auth/test\u4F1A\u8F6C\u53D1\u5230xc-service-auth\u670D\u52A1
+#          uri: lb://xc-service-auth #lb\u6307\u7684\u662F\u8D1F\u8F7D\u5747\u8861\uFF0C\u540E\u9762\u6307\u7684\u662F\u5FAE\u670D\u52A1\u6807\u8BC6\uFF0C\u5728\u670D\u52A1\u6CE8\u518C\u4E2D\u5FC3\u627E\u670D\u52A1\u540D\u4E3A xc-service-auth\u7684\u670D\u52A1
+#          order: 0 #\u8DEF\u7531\u7684\u4F18\u5148\u7EA7
+#          predicates: #\u65AD\u8A00
+#            - Path=/xc-service-auth/**
+#          filters:
+#            - StripPrefix=1 #\u5728\u8BF7\u6C42\u8F6C\u53D1\u4E4B\u524D\u53BB\u6389\u4E00\u5C42\u8DEF\u5F84
+#
+#        - id: xc-service-hotel
+#          uri: lb://xc-service-hotel
+#          order: 0
+#          predicates:
+#            - Path=/xc-service-hotel/**
+#          filters:
+#            - StripPrefix=1
+#
+#        - id: xc-service-manage
+#          uri: lb://xc-service-manage
+#          order: 0
+#          predicates:
+#            - Path=/xc-service-manage/**
+#          filters:
+#            - StripPrefix=1

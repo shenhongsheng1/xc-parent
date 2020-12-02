@@ -1,0 +1,30 @@
+#配置放在nacos的xc-service-auth-dev.yaml中
+#server:
+#  port: 8001
+#spring:
+#  application:
+#    name: xc-service-auth
+  #数据库配置 （数据库配置放在nacos的common-dev.yaml中）
+#  datasource:
+#    # 使用druid数据源
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/xc-service?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+#    username: root
+#    password: zyz123456
+
+#mybatis-plus:
+#  configuration:
+#    map-underscore-to-camel-case: true   #该配置项就是指将带有下划线的表字段映射为驼峰格式的实体类属性。
+#    auto-mapping-behavior: full   #自动映射的时候sql语句的结果集字段是不区分大小写的，所以映射的pojo成员变量也不需要区分大小写，都可以映射到。
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl    #控制台打印sql语句
+#    use-actual-param-name: false   #不加@param,mybatis中调用参数和入参名一致就可以了
+#  mapper-locations: classpath*:mapper/**/*Mapper.xml  #MyBatis Mapper 所对应的 XML 文件位置，如果您在 Mapper 中有自定义方法(XML 中有自定义实现)，需要进行该配置，告诉 Mapper 所对应的 XML 文件位置
+#  global-config:
+#    # 逻辑删除配置
+#    db-config:
+#      #逻辑删除字段为1是删除
+#      logic-not-delete-value: 1
+#      #逻辑删除字段为0是未删除
+#      logic-delete-value: 0
+

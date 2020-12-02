@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.xc</groupId>
+    <artifactId>xc-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>xc-parent</name>
+    <packaging>pom</packaging>  <!--父模块打包类型必须为pom-->
+
+    <!--父级项目下的子级工程-->
+    <modules>
+        <module>xc-service-common</module>
+        <module>xc-service-gateway</module>
+        <module>xc-service-auth</module>
+        <module>xc-service-hotel</module>
+        <module>xc-service-manage</module>
+        <module>xc-service-web</module>
+    </modules>
+
+    <!--统一依赖版本管理-->
+    <properties>
+        <java.version>1.8</java.version>
+        <xc-service.core>0.0.1-SNAPSHOT</xc-service.core>
+        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+        <spring-boot-test.version>1.5.11.RELEASE</spring-boot-test.version>
+        <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+        <mysql.version>8.0.19</mysql.version>
+        <druid.version>1.1.21</druid.version>
+        <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <shiro.version>1.3.2</shiro.version>
+        <nacos.version>2.2.3.RELEASE</nacos.version>
+        <gson.version>2.8.4</gson.version>
+    </properties>
+
+    <!--控制springcloud个组件版本-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xc</groupId>
+                <artifactId>xc-service-common</artifactId>
+                <version>${xc-service.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc</groupId>
+                <artifactId>xc-service-gateway</artifactId>
+                <version>${xc-service.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc</groupId>
+                <artifactId>xc-service-auth</artifactId>
+                <version>${xc-service.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc</groupId>
+                <artifactId>xc-service-hotel</artifactId>
+                <version>${xc-service.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc</groupId>
+                <artifactId>xc-service-manage</artifactId>
+                <version>${xc-service.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc</groupId>
+                <artifactId>xc-service-web</artifactId>
+                <version>${xc-service.core}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

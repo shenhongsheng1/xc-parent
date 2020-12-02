@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xc.auth.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.xc.auth.entity.User">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="expiredDate" column="expired_date" jdbcType="DATE"/>
+        <result property="createTime" column="create_time" jdbcType="DATE"/>
+        <result property="updateTime" column="update_time" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_name, `name`, password, email, salt, status, expired_date, create_time, update_time
+    </sql>
+
+    <sql id="whereSql">
+        <if test="null != _parameter">
+            <where>
+                <if test="null != userName and '' != userName">
+                    and user_name = #{userName,jdbcType=VARCHAR}
+                </if>
+                <if test="null != name and '' != name">
+                    and `name` = #{name,jdbcType=VARCHAR}
+                </if>
+                <if test="null != password and '' != password">
+                    and password = #{password,jdbcType=VARCHAR}
+                </if>
+                <if test="null != email and '' != email">
+                    and email = #{email,jdbcType=VARCHAR}
+                </if>
+                <if test="null != salt and '' != salt">
+                    and salt = #{salt,jdbcType=VARCHAR}
+                </if>
+                <if test="null != status and '' != status">
+                    and status = #{status,jdbcType=VARCHAR}
+                </if>
+                <if test="null != expiredDate">
+                    and expired_date = #{expiredDate,jdbcType=VARCHAR}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <select id="findByParam" resultMap="BaseResultMap" parameterType="com.xc.auth.entity.User">
+        select <include refid="Base_Column_List"/> from xc_auth_user <include refid="whereSql"/>
+    </select>
+
+    <resultMap id="UserResultMap" type="com.xc.auth.domain.UserVO">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="expiredDate" column="expired_date" jdbcType="DATE"/>
+
+        <collection property="roles" ofType="com.xc.auth.domain.RoleVO">
+            <id property="id" column="roleId" jdbcType="INTEGER"/>
+            <result property="roleCode" column="role_code" jdbcType="VARCHAR"/>
+            <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="available" column="available" jdbcType="BOOLEAN"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+
+            <collection property="permissions" ofType="com.xc.auth.domain.PermissionVO">
+                <id property="id" column="permissionId" jdbcType="INTEGER"/>
+                <result property="permissionCode" column="permission_code" jdbcType="VARCHAR"/>
+                <result property="permissionName" column="permission_name" jdbcType="VARCHAR"/>
+                <result property="available" column="permissionAvailable" jdbcType="BOOLEAN"/>
+                <result property="roleId" column="permissionRoleId" jdbcType="INTEGER"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findByUserName" resultMap="UserResultMap" parameterType="java.lang.String">
+        select
+            u.id,
+            u.user_name,
+            u.name,
+            u.password,
+            u.email,
+            u.salt,
+            u.status,
+            u.expired_date,
+            r.id as roleId,
+            r.role_code,
+            r.role_name,
+            r.description,
+            r.available,
+            r.user_id,
+            p.id as permissionId,
+            p.permission_code,
+            p.permission_name,
+            p.available as permissionAvailable,
+            p.role_id as permissionRoleId
+        from
+            xc_auth_user u
+        left join
+            xc_auth_role r
+        on
+            u.id = r.user_id
+        left join
+            xc_auth_permission p
+        on
+            r.id = p.role_id
+        where 1 = 1 and u.user_name = #{userName,jdbcType=VARCHAR}
+    </select>
+</mapper>
