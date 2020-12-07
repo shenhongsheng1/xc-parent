@@ -1,9 +1,11 @@
-package com.xc.auth.config;
+package com.xc.manage.config;
 
-import com.xc.auth.service.UserService;
 import com.xc.common.domain.PermissionVO;
+import com.xc.common.domain.ResultInfo;
 import com.xc.common.domain.RoleVO;
 import com.xc.common.domain.UserVO;
+import com.xc.common.enums.GlobalStatusEnum;
+import com.xc.manage.api.AuthClient;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -30,32 +32,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyShiroRealm.class);
 
     @Autowired
-    private UserService userService;
-
-    /**
-     * 权限配置类
-     * @author ShenHongSheng
-     * version: 2020/11/30
-     * @param principalCollection : 
-     * @return : AuthorizationInfo
-     */
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        LOGGER.info("============权限配置开始===========");
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        //如果身份认证的时候没有传入User对象，这里只能取到userName
-        //PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();  //Principals(身份)
-        String userName = (String) SecurityUtils.getSubject().getPrincipal();
-        UserVO user = userService.findByUserName(userName);
-        for(RoleVO role : user.getRoles()){
-            authorizationInfo.addRole(role.getRoleCode());
-            for(PermissionVO p : role.getPermissions()){
-                authorizationInfo.addStringPermission(p.getPermissionCode());
-            }
-        }
-        LOGGER.info("============权限配置结束===========");
-        return authorizationInfo;
-    }
+    private AuthClient authClient;
 
     /**
      * 认证配置类
@@ -72,7 +49,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         String userName = (String) authenticationToken.getPrincipal();        //Principals(身份)
         char[] credentials =  (char[]) authenticationToken.getCredentials();    //Credentials(凭证)
         String password = new String(credentials);
-        UserVO user = userService.findByUserName(userName);
+        UserVO user = null;
+        ResultInfo<UserVO> userInfo = authClient.getUserInfo(userName);
+        if (userInfo != null && GlobalStatusEnum.SUCCESS.getCode().equals(userInfo.getCode())) {
+            user = userInfo.getResult();
+        }
         if (userName == null) {
             throw new UnknownAccountException("账号不存在！");
         } else if (user == null) {
@@ -90,5 +71,37 @@ public class MyShiroRealm extends AuthorizingRealm {
         );
         LOGGER.info("============认证配置结束===========");
         return authenticationInfo;
+    }
+
+    /**
+     * 权限配置类
+     * @author ShenHongSheng
+     * version: 2020/11/30
+     * @param principalCollection : 
+     * @return : AuthorizationInfo
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        LOGGER.info("============权限配置开始===========");
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        //如果身份认证的时候没有传入User对象，这里只能取到userName
+        //PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();  //Principals(身份)
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        UserVO user = null;
+        ResultInfo<UserVO> userInfo = authClient.getUserInfo(userName);
+        if (userInfo != null && GlobalStatusEnum.SUCCESS.getCode().equals(userInfo.getCode())) {
+            user = userInfo.getResult();
+        }
+        if (user == null) {
+            throw new UnknownAccountException("账号不存在！");
+        }
+        for(RoleVO role : user.getRoles()){
+            authorizationInfo.addRole(role.getRoleCode());
+            for(PermissionVO p : role.getPermissions()){
+                authorizationInfo.addStringPermission(p.getPermissionCode());
+            }
+        }
+        LOGGER.info("============权限配置结束===========");
+        return authorizationInfo;
     }
 }

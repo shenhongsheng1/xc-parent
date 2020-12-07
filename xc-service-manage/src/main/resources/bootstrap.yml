@@ -14,3 +14,6 @@ spring:
         file-extension: yaml    # 配置内容的数据格式
         server-addr: ${spring.cloud.nacos.discovery.server-addr}   # nacos的登录ip和端口
         namespace: ${spring.cloud.nacos.discovery.namespace}      # nacos上面创建的命名空间ID
+        ext-config:    #自定义配置（添加此配置去获取nacos上面指定的配置而不是根据$ {prefix}-$ {spring. profile. active}. $ {file - extension}的dataID文件读取）
+        - data-id: common-dev.yaml
+          group: DEFAULT_GROUP

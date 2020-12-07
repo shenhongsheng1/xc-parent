@@ -1,4 +1,4 @@
-package com.xc.auth.exception;
+package com.xc.manage.exception;
 
 import com.xc.common.domain.ResultInfo;
 import com.xc.common.enums.GlobalStatusEnum;

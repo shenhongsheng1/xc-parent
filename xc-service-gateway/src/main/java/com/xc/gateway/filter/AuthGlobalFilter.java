@@ -48,7 +48,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         String path = request.getURI().getPath();
         logger.info("============ 请求path：{} ===========", path);
         //api接口，校验用户必须登录
-        if(!antPathMatcher.match("/xc-service-auth/**", path)) {
+        if(!antPathMatcher.match("/**/login", path)) {
             return authFailure(exchange);
             /*List<String> tokenList = request.getHeaders().get("token");   校验请求头中的token
             if(null == tokenList) {
@@ -62,10 +62,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                 }
             }*/
         }
-        //内部服务接口，不允许外部访问
-        //if(!antPathMatcher.match("/**/inner/**", path)) {
-        //    return authFailure(exchange);
-        //}
         return chain.filter(exchange);
     }
 
