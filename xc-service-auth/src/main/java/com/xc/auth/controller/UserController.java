@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,7 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Date: 2020/11/30 15:46
  * @version V1.0
  */
-@RestController(value = "/auth/user")
+@RestController
+@RequestMapping(value = "/auth/user")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -37,6 +40,7 @@ public class UserController {
      * @return : ResultInfo<UserVO>
      */
     @GetMapping(value = "/getUserInfo")
+    @ResponseBody
     public ResultInfo<UserVO> getUserInfo(@RequestParam String userName) {
         LOGGER.info("UserController1: ", userName);
         QueryWrapper<User> wrapper = new QueryWrapper<>();

@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author ShenHongSheng
@@ -37,7 +37,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(String username, String password, Model model) {
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             throw new RuntimeException(GlobalStatusEnum.NOT_ACCEPTABLE.getMessage());
         }
