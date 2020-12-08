@@ -1,7 +1,5 @@
 package com.xc.manage.controller;
 
-import com.xc.common.domain.ResultInfo;
-import com.xc.common.domain.UserVO;
 import com.xc.common.enums.GlobalStatusEnum;
 import com.xc.manage.api.AuthClient;
 import org.apache.shiro.SecurityUtils;
@@ -17,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author ShenHongSheng
@@ -60,24 +57,5 @@ public class LoginController {
             throw new AuthenticationException(e.getMessage());
         }
         return "/index";
-    }
-
-
-    /**
-     * 根据用户名获取用户信息
-     * @author ShenHongSheng
-     * version: 2020/12/7
-     * @param userName :
-     * @return : null
-     */
-    @GetMapping(value = "/getUserInfo")
-    public ResultInfo<UserVO> getUserInfo(@RequestParam String userName) {
-        LOGGER.info("FeignClient调用xc-service-auth服务的getUserInfo接口入参: ", userName);
-        ResultInfo<UserVO> userInfo = authClient.getUserInfo(userName);
-        if (userInfo == null) {
-            LOGGER.error("FeignClient调用xc-service-auth服务的getUserInfo接口失败！");
-            throw new RuntimeException("FeignClient调用xc-service-auth服务的getUserInfo接口失败！");
-        }
-        return userInfo;
     }
 }

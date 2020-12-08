@@ -48,7 +48,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         String path = request.getURI().getPath();
         logger.info("============ 请求path：{} ===========", path);
         //api接口，校验用户必须登录
-        if(!antPathMatcher.match("/**/login", path)) {
+        if(!antPathMatcher.match("/**/**", path)) {
             return authFailure(exchange);
             /*List<String> tokenList = request.getHeaders().get("token");   校验请求头中的token
             if(null == tokenList) {
