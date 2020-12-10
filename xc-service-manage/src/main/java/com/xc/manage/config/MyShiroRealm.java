@@ -15,6 +15,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +65,10 @@ public class MyShiroRealm extends AuthorizingRealm {
 //                throw new IncorrectCredentialsException("密码错误！");
             }
         }
+
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("userName", userName);
+
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 user, //这里传入的是user对象，比对的是用户名，直接传入用户名也没错，但是在授权部分就需要自己重新从数据库里取权限
                 user.getPassword(), //密码

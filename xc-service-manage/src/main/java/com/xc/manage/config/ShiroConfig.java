@@ -60,9 +60,11 @@ public class ShiroConfig {
         // 配置 logout 过滤器
         filterChainMap.put("/logout", "logout");
 
-        // 以“/admin/**  /user/**” 开头的url需要身份认证，authc 表示要进行身份认证
+        // 以“/admin/**” 开头的url需要身份认证，authc 表示要进行身份认证
         filterChainMap.put("/admin/**", "authc");
-        filterChainMap.put("/user/**", "authc");
+
+        // 以“/user/**” 开头的url不需要身份认证，anon 表示不要进行身份认证
+        filterChainMap.put("/user/**", "anon");
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 以“/**” 开头的url需要身份认证
         filterChainMap.put("/**", "authc");
         // 设置 shiroFilterFactoryBean 的 FilterChainDefinitionMap
