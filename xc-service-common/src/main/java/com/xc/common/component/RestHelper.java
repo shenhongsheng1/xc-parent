@@ -1,4 +1,4 @@
-package com.xc.common.componet;
+package com.xc.common.component;
 
 import com.alibaba.nacos.common.utils.MapUtils;
 import com.xc.common.exception.InnerInterfaceException;
@@ -7,6 +7,7 @@ import com.xc.common.utils.ObjectUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,7 @@ import java.util.Map;
  * @version V1.0
  */
 @Component
+@DependsOn({"innerRestTemplate", "outerRestTemplate"})
 public class RestHelper {
 
     @Autowired

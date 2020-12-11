@@ -31,7 +31,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     /**
      * 根据用户名获取用户信息
      * @author ShenHongSheng

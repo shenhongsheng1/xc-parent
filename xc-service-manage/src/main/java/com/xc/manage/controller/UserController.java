@@ -1,6 +1,6 @@
 package com.xc.manage.controller;
 
-import com.xc.common.componet.RestHelper;
+import com.xc.common.component.RestHelper;
 import com.xc.common.domain.ResultInfo;
 import com.xc.common.domain.UserVO;
 import com.xc.manage.api.AuthClient;
@@ -39,8 +39,8 @@ public class UserController {
     @Autowired
     private AuthClient authClient;
 
-    @Autowired
-    private RestHelper restHelper;
+    /*@Autowired
+    private RestHelper restHelper;*/
 
     @Autowired
     @Qualifier("inner")
@@ -121,7 +121,8 @@ public class UserController {
         LOGGER.info("RestTemplate调用xc-service-auth服务的getUserInfo接口入参: ", userName);
         ParameterizedTypeReference<ResultInfo<UserVO>> resultType = new ParameterizedTypeReference<ResultInfo<UserVO>>(){};
         String url = "http://xc-service-auth/auth/user/getUserInfo?userName=" + userName;
-        ResultInfo<UserVO> resultBody = restHelper.getForEntityFromInner(url, HttpMethod.GET, resultType);
+//        ResultInfo<UserVO> resultBody = restHelper.getForEntityFromInner(url, HttpMethod.GET, resultType);
+        ResultInfo<UserVO> resultBody = null;
         if (resultBody == null) {
             LOGGER.error("RestTemplate调用xc-service-auth服务的getUserInfo接口失败！");
             throw new RuntimeException("RestTemplate调用xc-service-auth服务的getUserInfo接口失败！");

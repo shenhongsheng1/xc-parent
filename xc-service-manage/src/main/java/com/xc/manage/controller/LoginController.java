@@ -1,7 +1,6 @@
 package com.xc.manage.controller;
 
 import com.xc.common.enums.GlobalStatusEnum;
-import com.xc.manage.api.AuthClient;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -9,7 +8,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
-
-    @Autowired
-    private AuthClient authClient;
 
     @GetMapping(value = "/login")
     public String Login() {
