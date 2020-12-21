@@ -7,35 +7,27 @@
     <link rel="stylesheet" type="text/css" th:href="@{/js/themes/icon.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
-    <link rel="shortcut icon" th:href="@{/images/auth/favicon.ico}" type="image/x-icon" />
     <script type="text/javascript" th:src="@{/frameworks/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/frameworks/jquery/jquery-ui.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/ajaxfileupload.js}"></script>
     <script type="text/javascript" th:src="@{/frameworks/jquery/jquery-form.js}"></script>
     <script type="text/javascript" th:src="@{/frameworks/jquery/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/datePicker/WdatePicker.js}"></script>
-    <script th:src="@{/js/layer/layer.js}"></script>
-    <script th:src="@{/js/public.js}"></script>
 </head>
 <body>
 <div class="login-box">
-    <img th:src="@{/images/auth/login.jpg}" width="100%" height="100%" />
+    <img th:src="@{/images/login.jpg}" width="100%" height="100%"></div>
 
     <form action="" method="post">
         <div class="login">
             <div class="login_page">
-                <div class="error" th:if="${error}" th:text="${error}"></div>
                 <table>
                     <tr>
                         <td class="text">用户名</td>
                         <td class="input-box"><input type="text" id="name" value="" name="username" placeholder="请输入用户名" />
-                            <!-- <div class="err-info">&times; 用户名不存在</div> -->
                         </td>
                     </tr>
                     <tr>
                         <td class="text pwd-text">密码</td>
                         <td class="input-box"><input type="password" id="pwd"  name="password" value="" placeholder="请输入密码" />
-                            <!--  <div class="err-info">&times; 密码错误，请重新输入</div> -->
                         </td>
                     </tr>
 
@@ -44,7 +36,6 @@
                         <td class="input-box"><input type="text" name="kaptchaCode" id="captcha"  value="" class="identifying" placeholder="请输入验证码" />
                             <div class="code-img">
                                 <span><img class="kcaptcha-btn kcaptcha-img" src="/kaptcha.jpg" title="点击更换验证码"></span></div>
-                            <!-- <div class="err-info">&times; 验证码错误，请重新输入</div> -->
                         </td>
                     </tr>
                 </table>
@@ -62,11 +53,5 @@
     $(".kcaptcha-btn").click(function() {
         $(this).attr("src", '/kaptcha.jpg?'+new Date().getTime());
     });
-    //重新加载
-    function reloadPage() {
-        var url = window.location.href;//取得当前页面url
-        window.location.href=url;
-        window.location.reload;
-    }
 </script>
 </html>

@@ -17,6 +17,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         LOGGER.info("============认证配置开始===========");
         //principal/credential 配对最常见的例子是用户名和密码。用户名是所声称的身份，密码是匹配所声称的身份的 证明。
         String userName = (String) authenticationToken.getPrincipal();        //Principals(身份)
-        char[] credentials =  (char[]) authenticationToken.getCredentials();    //Credentials(凭证)
-        String password = new String(credentials);
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("userName", userName);
         UserVO user = null;
         ResultInfo<UserVO> userInfo = authClient.getUserInfo(userName);
         if (userInfo != null && GlobalStatusEnum.SUCCESS.getCode().equals(userInfo.getCode())) {
@@ -59,19 +60,11 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw new UnknownAccountException("账号不存在！");
         } else if (user == null) {
             throw new AuthenticationException("用户验证失败！");
-        } else {
-            if (!password.equals(user.getPassword())) {
-                //数据库密码经过MD5加密，这个需要解密后比较
-//                throw new IncorrectCredentialsException("密码错误！");
-            }
         }
-
-        Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("userName", userName);
-
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user, //这里传入的是user对象，比对的是用户名，直接传入用户名也没错，但是在授权部分就需要自己重新从数据库里取权限
+                user.getUserName(), //直接传入用户名
                 user.getPassword(), //密码
+                ByteSource.Util.bytes(user.getCredentialsSalt()),  //密码盐
                 getName()  //realm name
         );
         LOGGER.info("============认证配置结束===========");

@@ -3,25 +3,33 @@ package com.xc.manage.controller;
 import com.xc.common.component.RestHelper;
 import com.xc.common.domain.ResultInfo;
 import com.xc.common.domain.UserVO;
+import com.xc.common.enums.GlobalStatusEnum;
+import com.xc.common.utils.ResultUtils;
 import com.xc.manage.api.AuthClient;
+import com.xc.manage.helper.PasswordHelper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * @author ShenHongSheng
@@ -40,6 +48,9 @@ public class UserController {
     private AuthClient authClient;
 
     @Autowired
+    private PasswordHelper passwordHelper;
+
+    @Autowired
     private RestHelper restHelper;
 
     @Autowired
@@ -49,6 +60,9 @@ public class UserController {
     @Autowired
     @Qualifier("outer")
     private RestTemplate outerRestTemplate;    //调用外部服务接口，通过（http:// + ip + 端口 + 接口url）调用
+
+    @Value("${user.add.salt}")
+    private String salt;
 
     /**
      * 根据用户名获取用户信息
@@ -127,5 +141,26 @@ public class UserController {
             throw new RuntimeException("RestTemplate调用xc-service-auth服务的getUserInfo接口失败！");
         }
         return resultBody;
+    }
+
+    /**
+     * 添加用户
+     * @author ShenHongSheng
+     * version: 2020/12/21
+     * @param userVO :
+     * @return : ResultInfo<String>
+     */
+    @PostMapping(value = "/addUser")
+    @ResponseBody
+    public ResultInfo<String> addUser(@RequestBody UserVO userVO) {
+        if (StringUtils.isEmpty(userVO.getUserName()) || StringUtils.isEmpty(userVO.getPassword())) {
+            return ResultUtils.error(GlobalStatusEnum.NOT_ACCEPTABLE.getCode(), "用户名或者密码不能为空！", "");
+        }
+        userVO.setSalt(salt);
+        userVO.setStatus((byte) 1);
+        userVO.setCreateTime(new Date());
+        userVO.setUpdateTime(new Date());
+        passwordHelper.encryptPassword(userVO);
+        return authClient.addUser(userVO);
     }
 }
