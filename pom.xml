@@ -17,6 +17,7 @@
         <module>xc-service-hotel</module>
         <module>xc-service-manage</module>
         <module>xc-service-web</module>
+        <module>sso-server</module>
     </modules>
 
     <!--统一依赖版本管理-->
@@ -98,6 +99,11 @@
             <dependency>
                 <groupId>com.xc</groupId>
                 <artifactId>xc-service-web</artifactId>
+                <version>${xc-service.core}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xc</groupId>
+                <artifactId>sso-server</artifactId>
                 <version>${xc-service.core}</version>
             </dependency>
         </dependencies>
