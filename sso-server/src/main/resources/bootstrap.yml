@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: sso-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848          # nacos的登录ip和端口
+        namespace: b18a10a2-dcb8-4db9-a047-c7df5fd44171  # nacos上面创建的命名空间ID
+      config:
+        enabled: true
+        prefix: ${spring.application.name}   # ${prefix} 默认为 spring.application.name的值，也可以通过配置项spring.cloud.config.prefix来配置
+        file-extension: yaml    # 配置内容的数据格式
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}   # nacos的登录ip和端口
+        namespace: ${spring.cloud.nacos.discovery.namespace}      # nacos上面创建的命名空间ID
+        ext-config:    #自定义配置（添加此配置去获取nacos上面指定的配置而不是根据$ {prefix}-$ {spring. profile. active}. $ {file - extension}的dataID文件读取）
+        - data-id: common-dev.yaml
+          group: DEFAULT_GROUP

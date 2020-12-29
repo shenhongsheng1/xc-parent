@@ -30,5 +30,20 @@ public class LoginFilter implements Filter {
         }
         //跳转至sso认证中心
         res.sendRedirect("sso-server-url-with-system-url");
+
+
+
+        // 请求附带token参数
+        String token = req.getParameter("token");
+        if (token != null) {
+            // 去sso认证中心校验token
+            boolean verifyResult = this.verify("sso-server-verify-url", token);
+            if (!verifyResult) {
+                res.sendRedirect("sso-server-url");
+                return;
+            }
+            chain.doFilter(request, response);
+        }
+
     }
 }

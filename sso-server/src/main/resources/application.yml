@@ -1,1 +1,28 @@
+server:
+  port: 8005
+spring:
+  application:
+    name: sso-server
 
+
+#设置整个连接池默认最大连接数
+http:
+  defaultMaxPerRoute: 100
+  #设置整个连接池最大连接数
+  maxTotal: 300
+  #设置请求超时
+  connectTimeout: 1000
+  #设置从连接池中获取到连接的最长时间
+  connectionRequestTimeout: 500
+  #设置数据传输的最长时间
+  socketTimeout: 10000
+
+
+
+redis:
+  node:
+    host: 192.168.225.131
+    port: 6379
+
+REDIS_USER_SESSION_KEY: REDIS_USER_SESSION
+SSO_SESSION_EXPIRE: 30

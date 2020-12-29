@@ -2,7 +2,6 @@ package com.sso.server.servlet;
 
 import com.sso.server.cache.JVMCache;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +19,12 @@ public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = -3170191388656385924L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         this.doPost(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String service = request.getParameter("service");
@@ -39,7 +38,7 @@ public class LoginServlet extends HttpServlet {
             if (null != service) {
                 StringBuilder url = new StringBuilder();
                 url.append(service);
-                if (0 <= service.indexOf("?")) {
+                if (service.contains("?")) {
                     url.append("&");
                 } else {
                     url.append("?");
@@ -53,5 +52,4 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("/sso/index.jsp?service=" + service);
         }
     }
-
 }
