@@ -4,6 +4,11 @@ spring:
   application:
     name: sso-server
 
+JWT:
+  #token过期时间（一天）
+  EXPIRE: 1000 * 60 * 60 * 24
+  #秘钥
+  APP_SECRET: ukc8BDbRigUDaY6pZFfWus2jZWLPHO
 
 #设置整个连接池默认最大连接数
 http:
@@ -17,12 +22,11 @@ http:
   #设置数据传输的最长时间
   socketTimeout: 10000
 
-
-
 redis:
   node:
-    host: 192.168.225.131
+    host: 127.0.0.1
     port: 6379
+  maxTotal: 200
 
 REDIS_USER_SESSION_KEY: REDIS_USER_SESSION
 SSO_SESSION_EXPIRE: 30

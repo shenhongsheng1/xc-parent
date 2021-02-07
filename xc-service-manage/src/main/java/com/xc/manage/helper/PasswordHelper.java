@@ -23,42 +23,18 @@ public class PasswordHelper {
 
     private int hashIterations = 1000;
 
-    /**
-     *
-     * @author kuangzhenhui
-     * @version 2019/3/20
-     * @param randomNumberGenerator :
-     */
     public void setRandomNumberGenerator(RandomNumberGenerator randomNumberGenerator) {
         this.randomNumberGenerator = randomNumberGenerator;
     }
 
-    /**
-     *
-     * @author kuangzhenhui
-     * @version 2019/3/20
-     * @param algorithmName :
-     */
     public void setAlgorithmName(String algorithmName) {
         this.algorithmName = algorithmName;
     }
 
-    /**
-     *
-     * @author kuangzhenhui
-     * @version 2019/3/20
-     * @param hashIterations :
-     */
     public void setHashIterations(int hashIterations) {
         this.hashIterations = hashIterations;
     }
 
-    /**
-     *
-     * @author kuangzhenhui
-     * @version 2019/3/20
-     * @param user :
-     */
     public void encryptPassword(UserVO user) {
         user.setSalt(randomNumberGenerator.nextBytes().toHex());
         System.out.println("salt: " + user.getSalt());

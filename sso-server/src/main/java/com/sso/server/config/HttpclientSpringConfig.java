@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 
 import java.util.concurrent.TimeUnit;
@@ -17,14 +18,16 @@ import java.util.concurrent.TimeUnit;
  * @author ShenHongSheng
  * ClassName: HttpclientSpringConfig
  * Description:
- * Date: 2020/12/29 16:05
+ * Date: 2021/2/5 14:31
  * @version V1.0
- * Configuration 作用于类上，相当于一个xml配置文件
- * Bean            作用于方法上，相当于xml配置中的<bean>
- * PropertySource  指定读取的配置文件
- * Value           获取配置文件的值
+ *
+ * @Configuration : 作用于类上，指明该类就相当于一个xml配置文件
+ * @Bean : 作用于方法上，指明该方法相当于xml配置中的，注意方法名的命名规范
+ * @PropertySource : 指定读取的配置文件，引入多个value={"xxx:xxx","xxx:xxx"},ignoreResourceNotFound=true 文件不存在时忽略
+ * @Value : 获取配置文件的值，该注解还有很多语法知识，这里暂时不扩展开
  */
 @Configuration
+@PropertySource(value = {"classpath:application.yml"}, ignoreResourceNotFound = true)
 public class HttpclientSpringConfig {
 
     @Value("${http.maxTotal}")
@@ -55,18 +58,18 @@ public class HttpclientSpringConfig {
         return poolingHttpClientConnectionManager;
     }
 
-    @Bean   // 定期清理无效连接
+    @Bean	// 定期清理无效连接
     public IdleConnectionEvictor idleConnectionEvictor() {
         return new IdleConnectionEvictor(manager, 1L, TimeUnit.HOURS);
     }
 
-    @Bean   // 定义HttpClient对象 注意该对象需要设置scope="prototype":多例对象
+    @Bean	// 定义HttpClient对象 注意该对象需要设置scope="prototype":多例对象
     @Scope("prototype")
     public CloseableHttpClient closeableHttpClient() {
         return HttpClients.custom().setConnectionManager(this.manager).build();
     }
 
-    @Bean   // 请求配置
+    @Bean	// 请求配置
     public RequestConfig requestConfig() {
         return RequestConfig.custom().setConnectTimeout(httpConnectTimeout) // 创建连接的最长时间
                 .setConnectionRequestTimeout(httpConnectionRequestTimeout) // 从连接池中获取到连接的最长时间

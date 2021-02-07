@@ -3,6 +3,7 @@ package com.sso.server.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
@@ -15,10 +16,11 @@ import java.util.List;
  * @author ShenHongSheng
  * ClassName: RedisSpringConfig
  * Description:
- * Date: 2020/12/29 16:29
+ * Date: 2021/2/5 14:40
  * @version V1.0
  */
 @Configuration
+@PropertySource(value = "classpath:application.yml", ignoreResourceNotFound = true)
 public class RedisSpringConfig {
 
     @Value("${redis.maxTotal}")
@@ -37,7 +39,7 @@ public class RedisSpringConfig {
     }
 
     @Bean
-    public JedisPool getJedisPool(){    // 省略第一个参数则是采用 Protocol.DEFAULT_DATABASE
+    public JedisPool getJedisPool(){	// 省略第一个参数则是采用 Protocol.DEFAULT_DATABASE
         return new JedisPool(jedisPoolConfig(), redisNodeHost, redisNodePort);
     }
 

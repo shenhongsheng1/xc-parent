@@ -39,6 +39,7 @@
             <artifactId>xc-service-common</artifactId>
             <version>${xc-service.core}</version>
         </dependency>
+
     </dependencies>
 
     <build>

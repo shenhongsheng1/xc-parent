@@ -17,12 +17,11 @@
     </properties>
 
     <dependencies>
-        <!--common服务依赖-->
-        <dependency>
-            <groupId>com.xc</groupId>
-            <artifactId>xc-service-common</artifactId>
-            <version>${xc-service.core}</version>
-        </dependency>
+        <!--spring启动核心包-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>-->
         <!--gateway依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -33,6 +32,12 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+        <!--common服务依赖-->
+        <dependency>
+            <groupId>com.xc</groupId>
+            <artifactId>xc-service-common</artifactId>
+            <version>${xc-service.core}</version>
         </dependency>
     </dependencies>
 

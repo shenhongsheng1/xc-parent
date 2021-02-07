@@ -1,10 +1,10 @@
 package com.xc.common.component;
 
-import com.alibaba.nacos.common.utils.MapUtils;
 import com.xc.common.exception.InnerInterfaceException;
 import com.xc.common.exception.OuterInterfaceException;
 import com.xc.common.utils.ObjectUtils;
-import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang.Validate;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.DependsOn;
@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
 import java.lang.reflect.Type;
 import java.util.Map;
 
